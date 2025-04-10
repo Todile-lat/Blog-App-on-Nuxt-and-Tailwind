@@ -35,7 +35,6 @@
   + Create New Post
 </NuxtLink>
 
-
       <h2 class="text-2xl font-bold mb-6 flex items-center justify-between mb-6 ">Featured Posts
         <button class="text-sm text-blue-300 mt-1" > More→ </button>
       </h2>
