@@ -4,7 +4,7 @@
     <header class="bg-white shadow-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
     
-  
+   
     <h1 class="text-4xl text-blue-800 font-bold">Logo</h1>
 
 
@@ -28,9 +28,16 @@
   </section>
 
 
-    <section class="py-10 px-4 md:px-10 bg-white-50">
+  
+<section class="py-10 px-4 md:px-10 bg-white-50">
+
+  <NuxtLink to="/createPost" class="inline-block mb-6 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+  + Create New Post
+</NuxtLink>
+
+
       <h2 class="text-2xl font-bold mb-6 flex items-center justify-between mb-6 ">Featured Posts
-        <button class="text-sm text-blue-300 mt-1" > More→</button>
+        <button class="text-sm text-blue-300 mt-1" > More→ </button>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
         <div
@@ -43,7 +50,7 @@
          </div>
           <div class="p-4 space-y-5">
             <h3 class="text-lg font-semibold flex align-center justify-between">
-            <span>{{ post.title }}</span>
+              <span>{{ post.title }}</span>
 
             <span class="text-sm text-blue-600 mt-1"> {{ post.category }}</span>
             </h3>
@@ -55,7 +62,7 @@
           </div>
         </div>
       </div>
-    </section>
+  </section>
 <br>
 <br>
 <br>
