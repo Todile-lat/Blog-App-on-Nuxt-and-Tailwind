@@ -1,63 +1,116 @@
 <template>
-  <section class="py-10 px-4 md:px-10 bg-white-50">
-    <h2 class="text-2xl font-bold mb-6 flex items-center justify-between">
-      Create a Post
-    </h2>
+    <NuxtLink to="/" class="inline-block mb-6 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition ml-6 mt-4">
+      ← Home
+</NuxtLink>
+  <div class="max-w-2xl mx-auto p-4 ">
+  
+    <h1 class="text-2xl font-bold mb-4 text-blue-600">Create a New Post</h1>
 
-    <form @submit.prevent="submitPost" class="bg-white border rounded-lg shadow-sm p-6 space-y-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Post Title</label>
-        <input v-model="title" type="text" placeholder="Enter post title" class="w-full py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required />
-      </div>
+    <form @submit.prevent="publishPost" class="space-y-4">
+      <input
+        v-model="newPost.title"
+        placeholder="Post Title"
+        class="border p-2 w-full"
+      />
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Author Name</label>
-        <input v-model="author" type="text" placeholder="Enter your name" class="w-full py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required />
-      </div>
+      <textarea
+        v-model="newPost.content"
+        placeholder="Post Content"
+        class="border p-2 w-full"
+        rows="6"
+      ></textarea>
+      <p >Upload an Image:</p>
+      <input
+        type="file"
+        accept="image/*"
+        @change="handleImageUpload"
+        class="border p-2"
+      />
 
-      
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Image Name</label>
-        <input v-model="image" type="text" placeholder="e.g. post-image.jpg" class="w-full py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required />
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Post Content</label>
-        <textarea v-model="info" rows="5" placeholder="Write your post content here..." class="w-full py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required></textarea>
-      </div>
-
-      <div class="text-right">
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-          Publish Post
-        </button>
-      </div>
+     
+      <p v-if="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</p>
+<br>
+      <button
+        type="submit"
+        :disabled="!isFormValid"
+        :class="{
+          'bg-gray-400': !isFormValid,
+          'bg-blue-600': isFormValid,
+          'text-white': true,
+          'cursor-not-allowed': !isFormValid
+        }"
+        class="px-4 py-2 rounded"
+      >
+        Publish Post
+      </button>
     </form>
-  </section>
+  </div>
+  <section  class="py-10 px-4 md:px-10 bg-black 500">
+      <footer>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    
+  
+    <h1 class="text-4xl text-blue-800 font-bold">Logo</h1>
+
+   
+    </div>
+
+    <nav class="text-sm space-x-10 text-gray-500 text-center">
+      <a href="#" class="text-sm text-white-300 font-medium">Additional Link</a>
+      <a href="#" class="text-sm text-white-300 font-medium">Additional Link</a>
+      <a href="#" class="text-sm text-white-300 font-medium">Additional Link</a>
+    </nav>
+
+    <p class="text-sm text-gray-500 text-right">
+  &copy; Your Company 2022. We Love You!
+</p>
+
+      </footer>
+    </section>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-// import { useBlogStore } from '@/stores/blogStore'
+<script setup lang="ts">
+import { usePostStore } from '@/stores/posts'
 import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
 
-// const blogStore = useBlogStore()
+const postStore = usePostStore()
 const router = useRouter()
 
-const title = ref('')
-const author = ref('')
-const image = ref('')
-const info = ref('')
+const newPost = ref({
+  title: '',
+  content: '',
+  image: '',
+})
 
-const submitPost = () => {
-  const newPost = {
-    title: title.value,
-    author: author.value,
-    image: image.value,
-    info: info.value,
-    time: 'Just now',
+const errorMessage = ref('')
+
+
+const isFormValid = computed(() => {
+  return !!newPost.value.title && !!newPost.value.content && !!newPost.value.image
+})
+
+function publishPost() {
+  if (!newPost.value.title || !newPost.value.content || !newPost.value.image) {
+    errorMessage.value = 'Please fill in the field'
+    return
   }
-  // blogStore.addPost(newPost)
-  router.push('/')
+
+  postStore.addPost(newPost.value)
+  errorMessage.value = ''
+  router.push('/success')
+}
+
+function handleImageUpload(event: Event) {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      newPost.value.image = reader.result as string
+    }
+    reader.readAsDataURL(file)
+  }
 }
 </script>

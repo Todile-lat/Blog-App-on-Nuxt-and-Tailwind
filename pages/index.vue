@@ -131,6 +131,9 @@
 
 
   <script setup>
+
+  import { usePostStore } from '@/stores/posts'
+  const postStore = usePostStore()
   const posts = [
     {
       title: 'Post Title',
