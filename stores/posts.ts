@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 
+interface Post { title: string; info: string; image: string; category: string; time: string; author: string  }
+
 export const usePostStore = defineStore('post', {
   state: () => ({
-    posts: [] as { title: string; content: string; image: string }[],
+    posts: [] as Post[],
   }),
   actions: {
-    addPost(post: { title: string; content: string; image: string }) {
-      this.posts.push(post)
+    addPost(post: Post) {
+      this.posts.unshift(post)
     }
   }
 })

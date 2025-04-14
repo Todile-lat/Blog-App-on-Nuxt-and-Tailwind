@@ -14,11 +14,24 @@
       />
 
       <textarea
-        v-model="newPost.content"
+        v-model="newPost.info"
         placeholder="Post Content"
         class="border p-2 w-full"
         rows="6"
       ></textarea>
+      <input
+        v-model="newPost.author"
+        placeholder="Author Name"
+        class="border p-2 w-full"
+        rows="6"
+      ></input>
+      <input
+        v-model="newPost.category"
+        placeholder="Post Category"
+        class="border p-2 w-full"
+        rows="6"
+      ></input>
+
       <p >Upload an Image:</p>
       <input
         type="file"
@@ -79,19 +92,22 @@ const router = useRouter()
 
 const newPost = ref({
   title: '',
-  content: '',
+  info: '',
   image: '',
+  author: '',
+  category: '',
+  time: '',
 })
 
 const errorMessage = ref('')
 
 
 const isFormValid = computed(() => {
-  return !!newPost.value.title && !!newPost.value.content && !!newPost.value.image
+  return !!newPost.value.title && !!newPost.value.info && !!newPost.value.image
 })
 
 function publishPost() {
-  if (!newPost.value.title || !newPost.value.content || !newPost.value.image) {
+  if (!newPost.value.title || !newPost.value.info || !newPost.value.image) {
     errorMessage.value = 'Please fill in the field'
     return
   }
@@ -113,4 +129,6 @@ function handleImageUpload(event: Event) {
     reader.readAsDataURL(file)
   }
 }
+
+
 </script>

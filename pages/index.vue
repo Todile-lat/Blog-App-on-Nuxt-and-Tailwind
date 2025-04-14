@@ -38,14 +38,15 @@
       <h2 class="text-2xl font-bold mb-6 flex items-center justify-between mb-6 ">Featured Posts
         <button class="text-sm text-blue-300 mt-1" > More→ </button>
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
+      <p v-if="posts.length < 1">No Posts Yet, Be the first to <NuxtLink to="/createPost" class="text-blue-400 underline">Create</NuxtLink>...</p>
+      <div v-if="posts.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
         <div
-          v-for="(post, index) in posts"
+          v-for="(post, index) in FeaturedPosts"
           :key="index"
           class="bg-white border rounded-lg shadow-sm hover:shadow transition"
         >
-         <div class="h-70">
-          <img :src="getImageUrl(post.image)" alt="Post image" class="w-full h-full rounded-t-lg">
+         <div class="h-[250px]">
+          <img :src="post.image" alt="Post image" class="w-full h-full object-fit rounded-t-lg">
          </div>
           <div class="p-4 space-y-5">
             <h3 class="text-lg font-semibold flex align-center justify-between">
@@ -130,37 +131,43 @@
 
 
 
-  <script setup>
+  <script lang="ts" setup>
 
   import { usePostStore } from '@/stores/posts'
   const postStore = usePostStore()
-  const posts = [
-    {
-      title: 'Post Title',
-      author: 'Author',
-      time: 'a min ago',
-      image: 'main.jpg',
-      info: 'Lorem',
-      category: 'Category',
-    },
-    {
-      title: 'Post Title',
-      author: 'Author',
-      time: 'a min ago',
-      image: 'main.jpg',
-       info: 'Lorem',
-       category: 'Category',
-    },
-    {
-      title: 'Post Title',
-      author: 'Author',
-      time: 'a min ago',
-      image: 'main.jpg',
-       info: 'Lorem',
-       category: 'Category',
-    },
+  const {posts}  = storeToRefs(postStore) 
 
-  ];
+  const FeaturedPosts = computed(() =>
+  posts.value
+    .slice(0,3))
+
+  // const posts = [
+  //   {
+  //     title: 'Post Title',
+  //     author: 'Author',
+  //     time: 'a min ago',
+  //     image: 'main.jpg',
+  //     info: 'Lorem',
+  //     category: 'Category',
+  //   },
+  //   {
+  //     title: 'Post Title',
+  //     author: 'Author',
+  //     time: 'a min ago',
+  //     image: 'main.jpg',
+  //      info: 'Lorem',
+  //      category: 'Category',
+  //   },
+  //   {
+  //     title: 'Post Title',
+  //     author: 'Author',
+  //     time: 'a min ago',
+  //     image: 'main.jpg',
+  //      info: 'Lorem',
+  //      category: 'Category',
+  //   },
+
+  // ];
 
   const categories = [
     {
@@ -190,7 +197,7 @@
 
   ];
 
-  const getImageUrl = (name) => {
+  const getImageUrl = (name: string) => {
     return new URL('../assets/img/' + name, import.meta.url).href
   }
 
