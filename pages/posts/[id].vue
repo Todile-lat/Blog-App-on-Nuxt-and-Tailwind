@@ -30,17 +30,62 @@
       <NuxtLink to="/" class="text-blue-500 mb-4 inline-block">← Back to Home</NuxtLink>
   
       <div v-if="post">
-          <h1 class="text-3xl font-bold text-black-800 mb-2">{{ post.title }}</h1>
-          <p class="text-blue-500 mb-4">
-          {{ post.author }} | {{ post.category }} | <p class="text-gray-500 mb-4" >{{ post.time }}</p>
-        </p>
-        <div class="h-[250px]">
-            <img :src="post.image" class="w-full h-full object-fit rounded mb-6">
-        </div>
-        <p class="text-lg text-gray-700 leading-relaxed w-full">{{ post.info }}</p>
-        <div class="text-center mb-6">
+          <div class="flex justify-between">
+              <h3 class="text-lg font-semibold flex align-center justify-between">
+                {{ post.title }}
+              </h3>
+              <div class="flex gap-1">
+                <button v-for="(category, index) in post.category" :key="index" class="bg-gray-400 text-xs text-white rounded-md px-2 py-1 text-nowrap">{{ category }}</button>
+              </div>
+            </div>
 
-</div>
+          <div class="text-blue-500 mb-4">
+            <h4>{{ post.author }}</h4>
+            <p class="text-gray-500 mb-4" >{{ post.time }}</p>
+          </div>
+          <div class="h-[250px]">
+              <img :src="post.image" class="w-full h-full object-fit rounded mb-6">
+          </div>
+        <p class="text-lg text-gray-700 leading-relaxed w-full">{{ post.info }}</p>
+
+
+        <div class="comment-container mt-4 border-2 p-4">
+          <ul class="">
+            <li class="border-b">
+              <div>
+                <h4 class="font-bold">John</h4>
+                <p>This is my first comment.</p>
+              </div>
+            </li>
+            <li class="border-b">
+              <div>
+                <h4 class="font-bold">John</h4>
+                <p>This is my first comment.</p>
+              </div>
+            </li>
+            <li class="border-b">
+              <div>
+                <h4 class="font-bold">John</h4>
+                <p>This is my first comment.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-4">
+          <div class="flex flex-col">
+            <label for="comment">Name</label>
+            <input type="text" class="border" />
+          </div>
+          <div class="flex flex-col">
+            <label for="comment">Comment</label>
+            <textarea rows="4" class="border" />
+          </div>
+          <div class="flex">
+            <button class="my-4 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition">Submit</button>
+          </div>
+        </div>
+
     </div>
       <p v-else class="text-red-500">Post not found.</p>
     </div>
