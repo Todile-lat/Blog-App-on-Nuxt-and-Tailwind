@@ -35,12 +35,17 @@
   + Create New Post
 </NuxtLink>
 
+
+  
       <h2 class="text-2xl font-bold mb-6 flex items-center justify-between mb-6 ">Featured Posts
-        <button class="text-sm text-blue-300 mt-1" > More→ </button>
+
+        <NuxtLink to="/allPosts">
+ <button class="text-sm text-blue-300 mt-1" > More→ </button></NuxtLink>
       </h2>
       <p v-if="posts.length < 1">No Posts Yet, Be the first to <NuxtLink to="/createPost" class="text-blue-400 underline">Create</NuxtLink>...</p>
       <div v-if="posts.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
-        <div
+        
+        <NuxtLink :to="`/posts/${post.id}`"
           v-for="(post, index) in FeaturedPosts"
           :key="index"
           class="bg-white border rounded-lg shadow-sm hover:shadow transition"
@@ -50,7 +55,7 @@
          </div>
           <div class="p-4 space-y-5">
             <h3 class="text-lg font-semibold flex align-center justify-between">
-              <span>{{ post.title }}</span>
+             <span>{{ post.title }}</span>
 
             <span class="text-sm text-blue-600 mt-1"> {{ post.category }}</span>
             </h3>
@@ -58,9 +63,9 @@
             <p class="text-sm text-blue-300 mt-1">{{ post.author }}</p>
             <p class="text-sm text-blue-300 mt-1 pl-4 text-gray-300" >{{ post.time }}</p>
           </h2>
-            <p class="text-sm text-gray-600 mt-1">{{ post.info }}</p>
+            <p class="text-sm text-gray-600 mt-1">{{ post.info.slice(0, 20) }}</p>
           </div>
-        </div>
+        </NuxtLink>
       </div>
   </section>
 <br>
@@ -140,6 +145,7 @@
   const FeaturedPosts = computed(() =>
   posts.value
     .slice(0,3))
+
 
   // const posts = [
   //   {

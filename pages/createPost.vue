@@ -25,12 +25,31 @@
         class="border p-2 w-full"
         rows="6"
       ></input>
-      <input
-        v-model="newPost.category"
-        placeholder="Post Category"
-        class="border p-2 w-full"
-        rows="6"
-      ></input>
+      
+      <p class="font-semibold mt-4">Select Categories:</p>
+<div class="flex flex-wrap gap-4">
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" value="Tech" v-model="newPost.category" />
+    <span>Tech</span>
+  </label>
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" value="Lifestyle" v-model="newPost.category" />
+    <span>Lifestyle</span>
+  </label>
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" value="News" v-model="newPost.category" />
+    <span>News</span>
+  </label>
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" value="Health" v-model="newPost.category" />
+    <span>Health</span>
+  </label>
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" value="Education" v-model="newPost.category" />
+    <span>Education</span>
+  </label>
+</div>
+
 
       <p >Upload an Image:</p>
       <input
@@ -95,7 +114,7 @@ const newPost = ref({
   info: '',
   image: '',
   author: '',
-  category: '',
+  category: [] as string[],
   time: '',
 })
 
@@ -129,6 +148,4 @@ function handleImageUpload(event: Event) {
     reader.readAsDataURL(file)
   }
 }
-
-
 </script>

@@ -3,7 +3,7 @@
       <h1 class="text-3xl font-bold text-green-600 mb-4">🎉 Post Published Successfully!</h1>
       <p class="text-lg text-gray-700">Your post is now live and visible on the homepage.</p>
       <NuxtLink to="/" class="inline-block mb-6 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-  Go To Home
+  Back To Home
 </NuxtLink>
 
 
